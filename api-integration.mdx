@@ -1,0 +1,245 @@
+---
+title: API Integration
+description: Guide for integrating VoxelAddons with external services and APIs
+---
+
+## API Integration Overview
+
+VoxelAddons provides comprehensive API support for seamless integration with external services, custom applications, and third-party platforms. The unified API follows REST principles and includes authentication, rate limiting, and comprehensive documentation.
+
+<Columns cols={2}>
+  <Card title="REST API" icon="code" href="#rest-api">
+    Standard REST endpoints for all plugin functionality.
+  </Card>
+  <Card title="Webhook System" icon="webhook" href="#webhooks">
+    Real-time event notifications and data synchronization.
+  </Card>
+</Columns>
+
+## Authentication
+
+All API requests require proper authentication using API keys or OAuth tokens.
+
+<Steps>
+  <Step title="Generate API Keys" icon="key">
+    
+    Create API keys from the VoxPro dashboard for secure access.
+    
+    ```php
+    // Generate API key programmatically
+    $api_key = VoxPro_API::generate_key([
+        'user_id' => get_current_user_id(),
+        'permissions' => ['read', 'write'],
+        'expires' => strtotime('+1 year')
+    ]);
+    ```
+    
+  </Step>
+  <Step title="Authenticate Requests" icon="shield">
+    
+    Include API key in request headers for authentication.
+    
+    <CodeGroup tabs="cURL,JavaScript,PHP">
+      ```bash
+      # cURL example
+      curl -H "Authorization: Bearer YOUR_API_KEY" \
+           -H "Content-Type: application/json" \
+           https://your-site.com/wp-json/voxeladdons/v1/users
+      ```
+      ```javascript
+      // JavaScript fetch example
+      const response = await fetch('/wp-json/voxeladdons/v1/users', {
+        headers: {
+          'Authorization': 'Bearer YOUR_API_KEY',
+          'Content-Type': 'application/json'
+        }
+      });
+      ```
+      ```php
+      // PHP example using wp_remote_get
+      $response = wp_remote_get('https://your-site.com/wp-json/voxeladdons/v1/users', [
+        'headers' => [
+          'Authorization' => 'Bearer YOUR_API_KEY',
+          'Content-Type' => 'application/json'
+        ]
+      ]);
+      ```
+    </CodeGroup>
+    
+  </Step>
+  <Step title="Handle Rate Limits" icon="clock">
+    
+    Respect API rate limits to avoid request throttling.
+    
+    <Expandable title="Rate Limit Headers" default-open="false">
+      API responses include rate limit headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset.
+    </Expandable>
+    
+  </Step>
+</Steps>
+
+<Callout kind="info">
+  API keys should be treated as sensitive information and stored securely. Use HTTPS for all API communications.
+</Callout>
+
+## REST API Endpoints
+
+The VoxelAddons API provides endpoints for all major functionality across plugins.
+
+<Tabs>
+  <Tab title="User Management" icon="users">
+    
+    Manage users, profiles, and authentication.
+    
+    ```bash
+    # Get user profile
+    GET /wp-json/voxeladdons/v1/users/{id}
+    
+    # Update user profile
+    PUT /wp-json/voxeladdons/v1/users/{id}
+    
+    # List users with filters
+    GET /wp-json/voxeladdons/v1/users?role=vendor&status=active
+    ```
+    
+  </Tab>
+  <Tab title="Orders & Payments" icon="credit-card">
+    
+    Handle orders, payments, and transactions.
+    
+    ```bash
+    # Create order
+    POST /wp-json/voxeladdons/v1/orders
+    
+    # Process payment
+    POST /wp-json/voxeladdons/v1/payments
+    
+    # Get payment status
+    GET /wp-json/voxeladdons/v1/payments/{id}
+    ```
+    
+  </Tab>
+  <Tab title="CRM Operations" icon="mail">
+    
+    Manage contacts, campaigns, and marketing automation.
+    
+    ```bash
+    # Create contact
+    POST /wp-json/voxeladdons/v1/contacts
+    
+    # Send email campaign
+    POST /wp-json/voxeladdons/v1/campaigns
+    
+    # Get campaign analytics
+    GET /wp-json/voxeladdons/v1/campaigns/{id}/analytics
+    ```
+    
+  </Tab>
+</Tabs>
+
+<ExpandableGroup>
+  <Expandable title="Error Handling" default-open="false">
+    
+    API responses follow standard HTTP status codes with detailed error messages.
+    
+    ```json
+    {
+      "code": "invalid_api_key",
+      "message": "The provided API key is invalid or expired",
+      "data": {
+        "status": 401
+      }
+    }
+    ```
+    
+  </Expandable>
+  <Expandable title="Pagination" default-open="false">
+    
+    List endpoints support pagination with customizable page sizes.
+    
+    ```bash
+    # Paginated request
+    GET /wp-json/voxeladdons/v1/users?page=2&per_page=50
+    
+    # Response includes pagination headers
+    # X-WP-Total: 150
+    # X-WP-TotalPages: 3
+    ```
+    
+  </Expandable>
+</ExpandableGroup>
+
+## Webhook Integration
+
+Set up webhooks to receive real-time notifications about events in your VoxelAddons ecosystem.
+
+<Steps>
+  <Step title="Register Webhook URL" icon="link">
+    
+    Configure webhook endpoints in the VoxPro dashboard.
+    
+  </Step>
+  <Step title="Select Events" icon="bell">
+    
+    Choose which events trigger webhook notifications.
+    
+    | Event Type | Description |
+    |------------|-------------|
+    | user.created | New user registration |
+    | order.completed | Order fulfillment |
+    | payment.received | Payment processing |
+    | campaign.sent | Email campaign delivery |
+    
+  </Step>
+  <Step title="Verify Payloads" icon="check-circle">
+    
+    Implement signature verification for webhook security.
+    
+    ```php
+    // Verify webhook signature
+    $signature = hash_hmac('sha256', $payload, $webhook_secret);
+    if ($signature === $_SERVER['HTTP_X_WEBHOOK_SIGNATURE']) {
+      // Process webhook
+    }
+    ```
+    
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+  Webhooks should be idempotent and handle duplicate events gracefully.
+</Callout>
+
+## Third-Party Integrations
+
+Connect VoxelAddons with popular services and platforms.
+
+<ExpandableGroup>
+  <Expandable title="Zapier Integration" default-open="false">
+    
+    Connect VoxelAddons events to thousands of apps via Zapier.
+    
+    - Create zaps triggered by VoxelAddons events
+    - Send data to Google Sheets, Slack, Trello, and more
+    - Automate workflows without custom development
+    
+  </Expandable>
+  <Expandable title="Mailchimp Integration" default-open="false">
+    
+    Sync VoxPulse contacts with Mailchimp audiences.
+    
+    - Automatic contact synchronization
+    - Campaign performance tracking
+    - Advanced segmentation
+    
+  </Expandable>
+  <Expandable title="Stripe Integration" default-open="false">
+    
+    Advanced payment processing with Stripe.
+    
+    - Support for subscriptions and one-time payments
+    - Webhook handling for payment events
+    - Automatic invoice generation
+    
+  </Expandable>
+</ExpandableGroup>

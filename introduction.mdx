@@ -1,0 +1,100 @@
+---
+title: Introduction
+description: Overview of VoxelAddons and its plugin ecosystem for Voxel theme enhancement
+---
+
+## Welcome to VoxelAddons
+
+VoxelAddons provides a comprehensive suite of plugins designed to extend and enhance the Voxel theme for WordPress. Whether you're building marketplaces, directories, or community platforms, our ecosystem offers powerful tools for CRM, payments, gamification, and AI-assisted development.
+
+<Columns cols={3}>
+  <Card title="VoxPro" icon="home" href="/docs/voxpro-overview">
+    Master framework with admin portal, authentication, and 20+ Elementor widgets.
+  </Card>
+  <Card title="VoxPulse" icon="mail" href="/docs/voxpulse-overview">
+    Complete CRM system with marketing automation and Voxel user integration.
+  </Card>
+  <Card title="VoxPay" icon="credit-card" href="/docs/voxpay-overview">
+    Payment processing with licensing, coupons, and digital product delivery.
+  </Card>
+</Columns>
+
+## Ecosystem Overview
+
+The VoxelAddons ecosystem is built around VoxPro as the foundation, with satellite plugins providing specialized functionality. All plugins integrate deeply with the Voxel theme through the Bridge API.
+
+<Tabs>
+  <Tab title="Architecture" icon="layers">
+    
+    VoxPro serves as the core framework, hosting services like cache, logging, and queue management. Satellite plugins VoxPulse, VoxPay, VoxPoints, and VoxLab extend functionality while maintaining tight integration.
+    
+    <Expandable title="Plugin Dependencies" default-open="false">
+      All satellite plugins require VoxPro for core services. VoxLab can work independently for AI development tasks but benefits from full ecosystem integration.
+    </Expandable>
+    
+  </Tab>
+  <Tab title="Key Features" icon="star">
+    
+    - Unified admin dashboard across all plugins
+    - Social authentication with 10 OAuth providers
+    - Advanced gamification and loyalty systems
+    - AI-powered development tools
+    - Comprehensive payment and licensing management
+    
+  </Tab>
+</Tabs>
+
+<Callout kind="info">
+  VoxelAddons requires the Voxel theme and VoxPro as the foundation plugin for full functionality.
+</Callout>
+
+<Steps>
+  <Step title="Install Voxel Theme" icon="download">
+    Ensure you have the Voxel theme installed and activated on your WordPress site.
+    
+    <CodeGroup tabs="Dashboard,WP-CLI">
+      ```bash
+      # Via WordPress Dashboard
+      # Go to Appearance > Themes > Add New > Upload Theme
+      # Upload voxel-theme.zip
+      ```
+      ```bash
+      # Via WP-CLI
+      wp theme install voxel-theme.zip --activate
+      ```
+    </CodeGroup>
+    
+  </Step>
+  <Step title="Install VoxPro" icon="settings">
+    Download and install the VoxPro plugin to establish the foundation.
+  </Step>
+  <Step title="Add Satellite Plugins" icon="plus">
+    Install additional plugins like VoxPulse, VoxPay, etc., as needed.
+  </Step>
+  <Step title="Configure Integration" icon="check">
+    Access the unified admin dashboard to configure settings and integrations.
+  </Step>
+</Steps>
+
+<ExpandableGroup>
+  <Expandable title="System Requirements" default-open="false">
+    - WordPress 5.0+
+    - PHP 7.4+
+    - Voxel theme
+    - Elementor page builder
+    - MySQL 5.6+
+  </Expandable>
+  <Expandable title="Support Resources" default-open="false">
+    - Documentation: Comprehensive guides and API references
+    - Community forums: User discussions and troubleshooting
+    - Professional support: Premium assistance for enterprise users
+  </Expandable>
+</ExpandableGroup>
+
+## Getting Started
+
+Begin your VoxelAddons journey by installing the core components and exploring the plugin capabilities. Our documentation provides step-by-step guides for installation, configuration, and advanced usage.
+
+<Card title="Quick Start Guide" icon="play" href="/docs/installation" horizontal>
+  Follow our installation guide to set up VoxelAddons quickly and efficiently.
+</Card>

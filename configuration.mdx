@@ -1,0 +1,236 @@
+---
+title: Configuration
+description: Complete guide for configuring VoxelAddons plugins and integrations
+---
+
+## Configuration Overview
+
+Proper configuration ensures optimal performance and functionality across the VoxelAddons ecosystem. Start with VoxPro settings, then configure individual satellite plugins based on your requirements.
+
+<Columns cols={3}>
+  <Card title="VoxPro Settings" icon="settings" href="#voxpro-config">
+    Core framework and service configuration.
+  </Card>
+  <Card title="Integration Setup" icon="link" href="#integrations">
+    Connect third-party services and APIs.
+  </Card>
+  <Card title="Performance Tuning" icon="zap" href="#performance">
+    Optimize for speed and reliability.
+  </Card>
+</Columns>
+
+## VoxPro Configuration
+
+VoxPro provides the foundation settings that affect all satellite plugins.
+
+<Steps>
+  <Step title="Access Admin Dashboard" icon="home">
+    
+    Navigate to VoxPro > Dashboard in your WordPress admin panel.
+    
+  </Step>
+  <Step title="Configure Core Services" icon="cog">
+    
+    Set up essential services like caching, logging, and queues.
+    
+    <Tabs>
+      <Tab title="Cache Settings" icon="database">
+        
+        Configure Redis or Memcached for improved performance.
+        
+        ```php
+        // wp-config.php additions
+        define('WP_CACHE', true);
+        define('WP_REDIS_HOST', '127.0.0.1');
+        define('WP_REDIS_PORT', 6379);
+        ```
+        
+      </Tab>
+      <Tab title="Logging Configuration" icon="file-text">
+        
+        Enable structured logging for debugging and monitoring.
+        
+        ```php
+        // Enable debug logging
+        define('WP_DEBUG', true);
+        define('WP_DEBUG_LOG', true);
+        ```
+        
+      </Tab>
+    </Tabs>
+    
+  </Step>
+  <Step title="Set Up Authentication" icon="key">
+    
+    Configure social login providers and security settings.
+    
+    <Expandable title="OAuth Providers" default-open="false">
+      VoxPro supports 10 OAuth providers including Google, Facebook, Twitter, and GitHub. Enable the providers you need and enter their API credentials.
+    </Expandable>
+    
+    <CodeGroup tabs="Google OAuth,Facebook OAuth">
+      ```php
+      // Google OAuth configuration
+      'google' => [
+          'client_id' => 'your_google_client_id',
+          'client_secret' => 'your_google_client_secret',
+          'redirect_uri' => home_url('/oauth/google/callback')
+      ]
+      ```
+      ```php
+      // Facebook OAuth configuration
+      'facebook' => [
+          'app_id' => 'your_facebook_app_id',
+          'app_secret' => 'your_facebook_app_secret',
+          'redirect_uri' => home_url('/oauth/facebook/callback')
+      ]
+      ```
+    </CodeGroup>
+    
+  </Step>
+  <Step title="Configure Rate Limiting" icon="shield">
+    
+    Set up API rate limiting to prevent abuse.
+    
+    ```php
+    // Rate limiting configuration
+    'rate_limits' => [
+        'api_calls' => [
+            'limit' => 1000,
+            'window' => 3600 // 1 hour
+        ],
+        'auth_attempts' => [
+            'limit' => 5,
+            'window' => 900 // 15 minutes
+        ]
+    ]
+    ```
+    
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+  Always test configuration changes in a staging environment before applying to production.
+</Callout>
+
+## Satellite Plugin Configuration
+
+Each satellite plugin has its own configuration section accessible from the VoxPro dashboard.
+
+<ExpandableGroup>
+  <Expandable title="VoxPulse Configuration" default-open="false">
+    
+    Set up CRM settings, email providers, and automation workflows.
+    
+    - Configure SMTP settings for email campaigns
+    - Set up lead scoring rules
+    - Define automation triggers for Voxel events
+    
+    ```php
+    // VoxPulse email configuration
+    'smtp' => [
+        'host' => 'smtp.gmail.com',
+        'port' => 587,
+        'username' => 'your_email@gmail.com',
+        'password' => 'your_app_password',
+        'encryption' => 'tls'
+    ]
+    ```
+    
+  </Expandable>
+  <Expandable title="VoxPay Configuration" default-open="false">
+    
+    Configure payment gateways and licensing options.
+    
+    - Set up PayPal API credentials
+    - Configure license key generation
+    - Enable subscription management
+    
+    ```php
+    // VoxPay PayPal configuration
+    'paypal' => [
+        'mode' => 'live', // or 'sandbox'
+        'client_id' => 'your_paypal_client_id',
+        'client_secret' => 'your_paypal_client_secret'
+    ]
+    ```
+    
+  </Expandable>
+  <Expandable title="VoxPoints Configuration" default-open="false">
+    
+    Set up gamification rules and reward systems.
+    
+    - Define point earning rules
+    - Configure achievement badges
+    - Set up referral programs
+    
+    ```php
+    // VoxPoints rule example
+    'rules' => [
+        'order_completed' => [
+            'points' => 10,
+            'description' => 'Points for completing an order'
+        ],
+        'referral_signup' => [
+            'points' => 50,
+            'description' => 'Bonus points for successful referrals'
+        ]
+    ]
+    ```
+    
+  </Expandable>
+  <Expandable title="VoxLab Configuration" default-open="false">
+    
+    Configure AI providers and development tools.
+    
+    - Set up API keys for AI services
+    - Configure code generation settings
+    - Enable web scraping tools
+    
+    ```php
+    // VoxLab OpenAI configuration
+    'openai' => [
+        'api_key' => 'your_openai_api_key',
+        'model' => 'gpt-4',
+        'max_tokens' => 2000
+    ]
+    ```
+    
+  </Expandable>
+</ExpandableGroup>
+
+## Integration Settings
+
+Connect VoxelAddons with external services and APIs.
+
+<Tabs>
+  <Tab title="Webhook Configuration" icon="webhook">
+    
+    Set up webhooks for real-time data synchronization.
+    
+    ```php
+    // Webhook configuration example
+    'webhooks' => [
+        'order_created' => [
+            'url' => 'https://api.external.com/webhook/order',
+            'secret' => 'your_webhook_secret',
+            'events' => ['order.created', 'order.updated']
+        ]
+    ]
+    ```
+    
+  </Tab>
+  <Tab title="API Integration" icon="code">
+    
+    Configure external API connections.
+    
+    <Expandable title="Third-Party APIs" default-open="false">
+      VoxelAddons can integrate with various third-party services including payment processors, email providers, and analytics platforms.
+    </Expandable>
+    
+  </Tab>
+</Tabs>
+
+<Callout kind="alert">
+  Store API keys and sensitive configuration data securely using WordPress constants or environment variables.
+</Callout>

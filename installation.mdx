@@ -1,0 +1,169 @@
+---
+title: Installation
+description: Step-by-step guide for installing and setting up VoxelAddons plugins
+---
+
+## Installation Overview
+
+Installing VoxelAddons involves setting up the Voxel theme first, then installing VoxPro as the foundation plugin, followed by any satellite plugins you need. This process ensures proper integration and functionality across the ecosystem.
+
+<Steps>
+  <Step title="Prepare Your Environment" icon="settings">
+    
+    Before installing VoxelAddons, ensure your WordPress environment meets the minimum requirements.
+    
+    <Expandable title="System Requirements" default-open="true">
+      - WordPress version 5.0 or higher
+      - PHP version 7.4 or higher
+      - MySQL version 5.6 or higher
+      - Voxel theme (latest version recommended)
+      - Elementor page builder plugin
+      - 256MB PHP memory limit (512MB recommended)
+    </Expandable>
+    
+    <CodeGroup tabs="Check PHP Version,Check WordPress Version">
+      ```bash
+      # Check PHP version
+      php -v
+      ```
+      ```bash
+      # Check WordPress version via WP-CLI
+      wp core version
+      ```
+    </CodeGroup>
+    
+  </Step>
+  <Step title="Install Voxel Theme" icon="download">
+    
+    The Voxel theme is required for VoxelAddons to function properly.
+    
+    <Tabs>
+      <Tab title="Dashboard Method" icon="monitor">
+        
+        1. Download the Voxel theme from your purchase confirmation email
+        2. Go to WordPress Dashboard > Appearance > Themes
+        3. Click "Add New" then "Upload Theme"
+        4. Choose the voxel-theme.zip file and click "Install Now"
+        5. Activate the theme once installation completes
+        
+        <Callout kind="tip">
+          Ensure all required plugins (Elementor, etc.) are also installed and activated.
+        </Callout>
+        
+      </Tab>
+      <Tab title="FTP Method" icon="server">
+        
+        1. Extract the voxel-theme.zip file on your local computer
+        2. Upload the extracted folder to wp-content/themes/ via FTP
+        3. Go to WordPress Dashboard > Appearance > Themes
+        4. Activate the Voxel theme
+        
+      </Tab>
+      <Tab title="WP-CLI Method" icon="terminal">
+        
+        ```bash
+        # Install and activate Voxel theme
+        wp theme install /path/to/voxel-theme.zip --activate
+        
+        # Verify activation
+        wp theme list
+        ```
+        
+      </Tab>
+    </Tabs>
+    
+  </Step>
+  <Step title="Install VoxPro Plugin" icon="package">
+    
+    VoxPro is the foundation plugin required for all other VoxelAddons plugins.
+    
+    <CodeGroup tabs="Dashboard,WP-CLI">
+      ```bash
+      # Via Dashboard
+      # 1. Download voxpro.zip from your account
+      # 2. Go to Plugins > Add New > Upload Plugin
+      # 3. Upload and activate
+      ```
+      ```bash
+      # Via WP-CLI
+      wp plugin install /path/to/voxpro.zip --activate
+      ```
+    </CodeGroup>
+    
+    After activation, you'll see the VoxPro menu in your WordPress admin sidebar.
+    
+  </Step>
+  <Step title="Install Satellite Plugins" icon="plus">
+    
+    Install additional plugins based on your needs.
+    
+    <Columns cols={2}>
+      <Card title="VoxPulse" icon="mail" href="#voxpulse">
+        CRM and marketing automation plugin.
+      </Card>
+      <Card title="VoxPay" icon="credit-card" href="#voxpay">
+        Payment processing and licensing.
+      </Card>
+      <Card title="VoxPoints" icon="star" href="#voxpoints">
+        Gamification and loyalty system.
+      </Card>
+      <Card title="VoxLab" icon="cpu" href="#voxlab">
+        AI development assistant.
+      </Card>
+    </Columns>
+    
+    Use the same installation method as VoxPro for each satellite plugin.
+    
+  </Step>
+  <Step title="Initial Configuration" icon="settings">
+    
+    Access the unified VoxPro dashboard to configure basic settings.
+    
+    <Expandable title="First-Time Setup" default-open="false">
+      1. Navigate to VoxPro > Dashboard in WordPress admin
+      2. Complete the welcome wizard
+      3. Configure basic site settings
+      4. Set up authentication providers if using VoxPro's social auth
+    </Expandable>
+    
+  </Step>
+</Steps>
+
+<Callout kind="info">
+  All satellite plugins automatically detect and integrate with VoxPro upon activation. No additional setup is required for basic functionality.
+</Callout>
+
+## Troubleshooting Installation
+
+If you encounter issues during installation, check these common problems and solutions.
+
+<ExpandableGroup>
+  <Expandable title="Plugin Activation Fails" default-open="false">
+    - Ensure Voxel theme is active
+    - Check PHP version compatibility
+    - Verify file permissions on wp-content/plugins/
+    - Deactivate conflicting plugins temporarily
+  </Expandable>
+  <Expandable title="White Screen After Activation" default-open="false">
+    - Increase PHP memory limit to 512MB
+    - Check for plugin conflicts
+    - Enable WordPress debug mode to see error messages
+    - Restore from backup if necessary
+  </Expandable>
+  <Expandable title="Missing Admin Menu" default-open="false">
+    - Refresh browser cache
+    - Check user capabilities and roles
+    - Re-activate the plugin
+    - Clear any caching plugins
+  </Expandable>
+</ExpandableGroup>
+
+<Update label="2024-10-15" description="Installation Guide v1.2" tags={["improvement", "documentation"]}>
+
+## Recent Updates
+
+- Added WP-CLI installation instructions
+- Updated system requirements for PHP 8.0 compatibility
+- Included troubleshooting section for common issues
+
+</Update>
